@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar</title>
+    <head>
+        <style>
+          /* Estilos gerais */
+          body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://img.freepik.com/vetores-premium/fundo-de-banner-abstrato-branco-e-cinza_28629-2091.jpg?w=2000");
+            height: 400px;
+            width: 100%;
+          }
+
+          .top{
+            position: fixed;
+            width: 100%;
+          }
+
+          header {
+            display:block;
+            font-family: Helvetica, sans-serif;
+            top:0;
+            left:0;
+            height: 90px;
+            width:100%;
+            background:rgb(128, 73, 1); /*cor de fundo mais sóbria*/
+            text-align:center;
+            padding: 20px 1; /*espaçamento interno mais refinado*/
+            background-image: url("https://static.wixstatic.com/media/e361d3_4769bea14fc94f9c896bbfade3a460c8~mv2.jpg/v1/fill/w_1777,h_132,al_c,lg_1,q_80,enc_auto/e361d3_4769bea14fc94f9c896bbfade3a460c8~mv2.jpg");
+          }
+
+          /*header {
+          text-align: center;
+          background: rgb(238, 5, 5);
+          padding: 10px; 
+          
+        }
+        
+        header h1 pou {
+          font-size: 50px;
+          color: rgb(8, 8, 8);
+        }
+
+        header h1  {
+          font-size: 50px;
+          color: rgb(247, 247, 247);
+        }*/
+
+          nav ul {
+          list-style-type: none;
+          background-color: black;
+          overflow: hidden;
+          margin: 0%;
+          padding: 0%;
+          
+        }
+
+        nav a {
+          color: #f1f1f1;
+          text-decoration: none;
+          padding: 16px;
+          display: block;
+        }
+
+        nav li {
+          float: right;
+        }
+
+        nav a:hover {
+          background-color: #f1f1f1;
+          color: rgb(12, 12, 12);
+        }
+
+          h1{
+            color: rgb(255, 255, 255);
+            text-decoration: rgb(255, 255, 255);
+          }
+          
+          button {
+            cursor: pointer;
+            font-family: sans-serif; /*fonte mais elegante*/
+            font-size: 14px; /*tamanho da fonte mais legível*/
+            padding: 10px; /*espaçamento interno mais refinado*/
+            background-color: #000000; /*cor de fundo mais sóbria*/
+            border: none; /*remoção da borda*/
+            color: white; /*cor da fonte mais elegante*/
+          }
+          
+          button:hover {
+            background-color: #999; /*cor de fundo ao passar o mouse mais sutil*/
+          }
+        * {
+          margin: 0;
+          font-family: sans-serif;
+        }
+      
+          /* Área de cadastro */
+          .area-login {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url("https://img.freepik.com/vetores-premium/fundo-de-banner-abstrato-branco-e-cinza_28629-2091.jpg?w=2000");      
+            width: 100%;
+          }
+      
+          /* Formulário de cadastro */
+          .login {
+            width: 400px;
+            padding: 20px;
+            background-color: rgb(255 98 0);
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+            margin-top: 120px;
+          }
+      
+          .login h2 {
+            margin-top: 0;
+          }
+      
+          .login form {
+            margin-top: 20px;
+          }
+      
+          .login input[type="text"],
+          .login input[type="password"] {
+            display: block;
+            margin-bottom: 10px;
+            margin-right: 10px;
+            padding: 10px;
+            width: 95%;
+            background-color: #fafafa;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            color: #333;
+            box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.7);
+            
+          }
+      
+          .login input[type="submit"] {
+            display: block;
+            margin: 0 auto;
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          }
+
+          .jaCadastrou {
+            color: "#FF0000"
+          }
+          
+          p {
+            color: red
+          }
+
+        </style>    
+
+</head>
+<body onload="showMesage()" >
+  <div class="top">
+    <header>
+        <br>
+          <h1 id="tytolu">Tradicional Restaurante</h1>
+        <br><br>
+    </header>
+    <nav>
+      <ul>
+        <li><button><a href="/inicio">Contato</a></button></li>
+        <li><button><a href="/inicio">Quem Somos</a></button></li>
+        <li><button> <a href="/">Cardapio</a></button></li>
+        <li><button><a href="/inicio">Inicio</a></button></li>
+      </ul>
+    </nav>
+  </div>
+  <section class="area-login">
+    <div class="login">
+        <h2><b>Cadastre-se:</b></h2>
+        <form action="/cadastrar" method="POST">
+            <input type="text" name="nome" placeholder="Nome" required><br>
+            <input type="text" name="login" placeholder="Nome de usuário" required><br>
+            <input type="password" name="passaword" placeholder="Senha" required><br>
+            <input type="text" name="email" placeholder="Email" required><br>
+            <input type="submit" value="Cadastrar"><br>
+        
+
+        </form><br>
+        <div><p id="jaCadastrou"><%= jaCadastrou %></p></div>
+    </div>
+</section>
+</body>
+
+<script>
+  /*
+            <p>A senha precisa ter pelo menos 8 caracteres</p>
+            <p>A senha precisa incluir letras maiúsculas e minúsculas</p>
+            <p>A senha precisa incluir caracteres especiais</p>
+            <p>Senha forte</p>
+  */
+  function showMesage() {
+    var mensagemAlerta = document.querySelector("jaCadastrou");
+    var jaCadastrou = document.getElementById('jaCadastrou').innerHTML
+    if (jaCadastrou == true) {
+      document.getElementById('jaCadastrou').innerHTML = 'Usuário já cadastrado'
+      mensagemAlerta.style.color = 'red';
+    }
+};
+
+
+  // Crie um intervalo que execute a função de validação periodicamente
+  var interval = setInterval(function() {
+    // Tente selecionar o elemento <form>
+    var formElement = document.querySelector("form");
+
+    // Se o elemento <form> for encontrado...
+    if (formElement) {
+      // ...cancele o intervalo
+      clearInterval(interval);
+
+      // Em seguida, selecione o campo de senha
+      var passwordField = document.getElementById("input[name=password]").innerHTML;
+
+      // Crie uma função de validação
+      function validatePassword() {
+        // Selecione as tags <p>
+        var pElements = formElement.querySelectorAll("p");
+        // Verifique se a senha atende às exigências
+        if (passwordField.value.length >= 8) {
+          // Se a senha atender, imprima no console
+          alert("A senha atende às exigências!");
+        } else {
+          // Se não atender, imprima no console
+          alert("A senha não atende às exigências!");
+        }
+    }
+    
+    // Execute a função de validação quando a página for carregada
+    window.addEventListener("load", validatePassword);
+    
+    // Adicione um event listener ao campo de senha que escute o evento "input"
+    passwordField.addEventListener("input", validatePassword);
+  }})
+
+
+
+
+
+</script>  
+</html>

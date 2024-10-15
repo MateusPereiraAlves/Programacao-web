@@ -1,0 +1,224 @@
+Fale_Conosco(id, id_cliente, mensagem)
+Clientes(id, nome, usuário, senha, email)
+Funcionários(id, nome, email, telefone, email)
+Produtos(id, nome, descrição, preço)
+Pedido(id, id_cliente, data)
+Pedido_Produto(id_pedido, id_produto, qtd_individual)
+Mesa(numero, id_pedido, id_func)
+
+
+
+
+CREATE TABLE Cliente_Mesa(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  mesa INTEGER,
+  nome_cliente nvarchar(100),
+  nome_func nvarchar(100),
+  FOREIGN KEY (nome_cliente) REFERENCES Clientes(nome),
+  FOREIGN KEY (nome_func) REFERENCES Clientes(nome)
+)
+
+CREATE TABLE Fale_Conosco(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_cliente nvarchar(100),
+    email nvarchar(100),
+    mensagem nvarchar(100),
+    FOREIGN KEY (nome_cliente) REFERENCES Clientes(nome),
+);
+
+CREATE TABLE Clientes(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome nvarchar(100),
+    usuário nvarchar(100),
+    senha nvarchar(100),
+    email nvarchar(100)
+);
+
+CREATE TABLE Funcionarios(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome nvarchar(100),
+    cpf int,
+    email nvarchar(100),
+    telefone nvarchar(100)
+);
+
+CREATE TABLE Produtos(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome id_produto,
+    descricao nvarchar(100),
+    preco int,
+    tipo nvarchar(100)
+);
+
+CREATE TABLE Pedido(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    nome_cliente nvarchar(100),
+    obs_pedido nvarchar(100),
+    FOREIGN KEY (nome_cliente) REFERENCES Clientes(nome)
+);
+
+CREATE TABLE Pedido_Produto(
+    id_pedido INTEGER ,
+    id_produto INTEGER ,
+    qtd_individual int,
+    PRIMARY KEY(id_pedido, id_produto),
+    FOREIGN KEY (id_pedido) REFERENCES Pedido(id),
+    FOREIGN KEY (id_produto) REFERENCES Produtos(id)
+);
+
+
+INSERT INTO Produtos (nome, descricao, preco, tipo)
+VALUES
+    ("Salada Caesar", "Salada de alface romana, croutons e parmesao", 10.50, "entrada"),
+    ("Lasanha de carne", "Lasanha de carne e queijo com molho de tomate", 20.00, "prato principal"),
+    ("Frango ao curry", "Frango com curry e arroz jasmim", 18.00, "prato principal"),
+    ("Caldo verde", "Sopa de couve e batata com linguica", 9.00, "entrada"),
+    ("Sopa de legumes", "Sopa de legumes com caldo de galinha", 8.00, "entrada"),
+    ("Salmao grelhado", "Salmao grelhado com pure de batata e legumes", 24.00, "prato principal"),
+    ("Espetinho de frango", "Espetinho de frango com arroz e salada", 15.00, "prato principal"),
+    ("Salada de frutas", "Salada de frutas mistas com iogurte natural", 10.00, "salada"),
+    ("Refrigerante", "Refrigerante de 2 litros", 4.50, "bebida"),
+    ("Agua mineral", "Agua mineral de 1 litro", 2.50, "bebida"),
+    ("Suco de laranja", "Suco de laranja natural de 1 litro", 3.50, "bebida"),
+    ("Bolo de chocolate", "Bolo de chocolate com cobertura de chocolate derretido", 10.00, "sobremesa"),
+    ("Sorvete de creme", "Sorvete de creme com calda de chocolate", 6.00, "sobremesa");
+
+
+INSERT INTO Funcionarios (nome, email, telefone, cpf)
+VALUES
+    ("João Silva", "joao.silva@gmail.com", "5555555555", "111.111.111-11"),
+    ("Maria Santos", "maria.santos@gmail.com", "5555555556", "222.222.222-22"),
+    ("Pedro Oliveira", "pedro.oliveira@gmail.com", "5555555557", "333.333.333-33"),
+    ("Ana Rodrigues", "ana.rodrigues@gmail.com", "5555555558", "444.444.444-44"),
+    ("Carlos Souza", "carlos.souza@gmail.com", "5555555559", "555.555.555-55"),
+    ("Bruno Lima", "bruno.lima@gmail.com", "5555555560", "666.666.666-66"),
+    ("Rita Souza", "rita.souza@gmail.com", "5555555561", "777.777.777-77");
+
+
+
+
+    {
+      "nome": "Salada Caesar",
+      "descricao": "Salada de alface romana, croutons e parmesao",
+      "preco": 10.50,
+      "tipo": "entrada"
+    },
+    {
+      "nome": "Lasanha de carne",
+      "descricao": "Lasanha de carne e queijo com molho de tomate",
+      "preco": 20.00,
+      "tipo": "prato principal"
+    },
+    {
+      "nome": "Frango ao curry",
+      "descricao": "Frango com curry e arroz jasmim",
+      "preco": 18.00,
+      "tipo": "prato principal"
+    },
+    {
+      "nome": "Caldo verde",
+      "descricao": "Sopa de couve e batata com linguica",
+      "preco": 9.00,
+      "tipo": "entrada"
+    },
+    {
+      "nome": "Sopa de legumes",
+      "descricao": "Sopa de legumes com caldo de galinha",
+      "preco": 8.00,
+      "tipo": "entrada"
+    },
+    {
+      "nome": "Salmao grelhado",
+      "descricao": "Salmao grelhado com pure de batata e legumes",
+      "preco": 24.00,
+      "tipo": "prato principal"
+    },
+    {
+      "nome": "Espetinho de frango",
+      "descricao": "Espetinho de frango com arroz e salada",
+      "preco": 15.00,
+      "tipo": "prato principal"
+    },{
+      "nome": "Salada de frutas",
+      "descricao": "Salada de frutas mistas com iogurte natural",
+      "preco": 10.00,
+      "tipo": "salada"
+    },
+    {
+      "nome": "Refrigerante",
+      "descricao": "Refrigerante de 2 litros",
+      "preco": 4.50,
+      "tipo": "bebida"
+    },
+    {
+      "nome": "Agua mineral",
+      "descricao": "Agua mineral de 1 litro",
+      "preco": 2.50,
+      "tipo": "bebida"
+    },
+    {
+      "nome": "Suco de laranja",
+      "descricao": "Suco de laranja natural de 1 litro",
+      "preco": 3.50,
+      "tipo": "bebida"
+    },
+    {
+      "nome": "Bolo de chocolate",
+      "descricao": "Bolo de chocolate com cobertura de chocolate derretido",
+      "preco": 10.00,
+      "tipo": "sobremesa"
+    },
+    {
+      "nome": "Sorvete de creme",
+      "descricao": "Sorvete de creme com calda de chocolate",
+      "preco": 6.00,
+      "tipo": "sobremesa"
+    }
+
+
+
+
+
+
+    {
+      "nome": "João Silva",
+      "email": "joao.silva@gmail.com",
+      "telefone": "5555555555",
+      "cpf": "111.111.111-11"
+    },
+    {
+      "nome": "Maria Santos",
+      "email": "maria.santos@gmail.com",
+      "telefone": "5555555556",
+      "cpf": "222.222.222-22"
+    },
+    {
+      "nome": "Pedro Oliveira",
+      "email": "pedro.oliveira@gmail.com",
+      "telefone": "5555555557",
+      "cpf": "333.333.333-33"
+    },
+    {
+      "nome": "Ana Rodrigues",
+      "email": "ana.rodrigues@gmail.com",
+      "telefone": "5555555558",
+      "cpf": "444.444.444-44"
+    },
+    {
+      "nome": "Carlos Souza",
+      "email": "carlos.souza@gmail.com",
+      "telefone": "5555555559",
+      "cpf": "555.555.555-55"
+    },
+    {
+      "nome": "Bruno Lima",
+      "email": "bruno.lima@gmail.com",
+      "telefone": "5555555560",
+      "cpf": "666.666.666-66"
+    },
+    {
+      "nome": "Rita Souza",
+      "email": "rita.souza@gmail.com",
+      "telefone": "5555555561",
+      "cpf": "777.777.777-77"
+    }

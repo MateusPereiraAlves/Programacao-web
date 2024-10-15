@@ -1,0 +1,313 @@
+
+<!doctype html>
+<html>
+  <head>
+    <title>Fechamento de Compra</title>
+
+    <style>
+      /* Estilos gerais */
+      body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://img.freepik.com/vetores-premium/fundo-de-banner-abstrato-branco-e-cinza_28629-2091.jpg?w=2000");
+            height: 400px;
+            width: 100%;
+          }
+
+      .top{
+            position: fixed;
+            width: 100%;
+          }
+
+          header {
+            display:block;
+            font-family: Helvetica, sans-serif;
+            top:0;
+            left:0;
+            height: 90px;
+            width:100%;
+            background:rgb(128, 73, 1); /*cor de fundo mais sóbria*/
+            text-align:center;
+            padding: 20px 1; /*espaçamento interno mais refinado*/
+            background-image: url("https://static.wixstatic.com/media/e361d3_4769bea14fc94f9c896bbfade3a460c8~mv2.jpg/v1/fill/w_1777,h_132,al_c,lg_1,q_80,enc_auto/e361d3_4769bea14fc94f9c896bbfade3a460c8~mv2.jpg");
+          }
+
+          /*header {
+          text-align: center;
+          background: rgb(238, 5, 5);
+          padding: 10px; 
+          
+        }
+        
+        header h1 pou {
+          font-size: 50px;
+          color: rgb(8, 8, 8);
+        }
+
+        header h1  {
+          font-size: 50px;
+          color: rgb(247, 247, 247);
+        }*/
+
+          nav ul {
+          list-style-type: none;
+          background-color: black;
+          overflow: hidden;
+          margin: 0%;
+          padding: 0%;
+          
+        }
+
+        nav a {
+          color: #f1f1f1;
+          text-decoration: none;
+          padding: 16px;
+          display: block;
+        }
+
+        nav li {
+          float: right;
+        }
+
+        nav a:hover {
+          background-color: #f1f1f1;
+          color: rgb(12, 12, 12);
+        }
+
+          h1{
+            color: rgb(255, 255, 255);
+            text-decoration: rgb(255, 255, 255);
+          }
+          
+          button {
+            cursor: pointer;
+            font-family: sans-serif; /*fonte mais elegante*/
+            font-size: 14px; /*tamanho da fonte mais legível*/
+            padding: 2px; /*espaçamento interno mais refinado*/
+            background-color: #000000; /*cor de fundo mais sóbria*/
+            border: none; /*remoção da borda*/
+            color: white; /*cor da fonte mais elegante*/
+          }
+          
+          button:hover {
+            background-color: #999; /*cor de fundo ao passar o mouse mais sutil*/
+          }
+        * {
+          margin: 0;
+          font-family: sans-serif;
+        }
+
+      /* Tela de fechamento de compra */
+      .checkout {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        margin: 0 auto;
+        max-width: 800px;
+        padding-top: 200px;
+        padding-bottom: 50px;
+      }
+
+      /* Resumo do pedido */
+      .summary {
+        width: 40%;
+        padding: 20px;
+        background-color: rgb(255 98 0);
+        border-radius: 5px;
+      }
+
+      .summary h1 {
+        margin-top: 0;
+      }
+
+      .summary h3 {
+        margin-bottom: 10px;
+      }
+
+      .summary #qtdTotal {
+        font-weight: bold;
+      }
+
+      .summary #Total {
+        font-size: 24px;
+        font-weight: bold;
+      }
+
+      /* Formulário de pagamento */
+      .payment {
+        width: 60%;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 5px;
+      }
+
+      .payment h1 {
+        margin-top: 0;
+      }
+
+      /* Campos do formulário */
+      .form-control {
+        margin-bottom: 10px;
+        padding: 10px;
+        background-color: #fafafa;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        color: #333;
+      }
+
+      /* Botão de pagamento */
+      .payment-button {
+        display: block;
+        margin: 0 auto;
+        padding: 10px 20px;
+        background-color: #333;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+
+      .produto {
+        border: 1.5px solid black;
+        margin: 10px;
+        box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.4);
+        background-color: rgba(233, 218, 0, 0.178);
+      }
+      
+      .produto-nome {
+        font-size: 18px;
+        font-weight: bold;
+      }
+      
+      .produto-preco {
+        color: rgb(116, 2, 2);
+      }
+      
+      .produto-quantidade {
+        font-size: 14px;
+      }
+    </style>
+    <script>
+
+      function textoParaFloat(texto) {
+        //Ao enviar o valor para o banco, vai transformar o valor em float
+
+        // Retira pontos que separam milhar se existirem. Ex: 1.000,25 vira 1000,25
+        texto = texto.replace(".", "");
+    
+        // Substitui vírgula separando a casa decimal por ponto ex: 1000,25 vira 1000.25
+        texto = texto.replace(",", "."); // isso é necessário para converter para float corretamente
+    
+        // Converte de texto para número real
+        numero = parseFloat(texto);
+        
+        return numero; // Retorna um número float para ser usado para fazer cálculos    
+      }
+
+      function floatParaTexto(numero) {
+        numero = numero.toFixed(2); // Duas casas decimais
+    
+        texto = numero.toString();
+        texto = texto.replace(".", ","); // substitui a vírgula por ponto 
+    
+        return texto;
+    }
+
+      var qtd_total = localStorage.getItem('qtd_total');
+      var valor_total = localStorage.getItem('valor_total');
+
+
+      var tbl_produtos = '<%- escape(JSON.stringify(produtos)) %>'
+      tbl_produtos = unescape(tbl_produtos)
+      tbl_produtos = JSON.parse(tbl_produtos)
+
+      var id_produtos_comprados = '<%= id_produtos_comprados %>'
+      var qtd_produtos_comprados = '<%= qtd_produtos_comprados %>'
+      id_produtos_comprados = id_produtos_comprados.split(',')
+
+
+      window.onload = function() {
+          document.getElementById("qtdTotal").innerHTML = qtd_total
+          document.getElementById("Total").innerHTML = valor_total
+          for (let idProd of id_produtos_comprados) {
+              indiceId = id_produtos_comprados.indexOf(idProd)
+              for (let produto of tbl_produtos) {
+                if (idProd == produto.id) {
+                  //ao excluir algum produto, os outros saem do carrinho como nada
+                      var id = produto.id
+                      var nome = produto.nome
+                      var preco = floatParaTexto(produto.preco)
+                      alert(qtd_produtos_comprados[indiceId])
+                      if (indiceId % 2 != 0) {
+                        indiceId++
+                      }
+                      alert(qtd_produtos_comprados[indiceId])
+
+                      var qtd_individual = qtd_produtos_comprados[indiceId]
+                      document.getElementById("pedidos").innerHTML += 
+                              "<div class='produto'>\
+                                <p class='produto-nome'>"+nome+"</p>\
+                                <p class='produto-preco'>"+preco+"</p>\
+                                <p class='produto-quantidade'>Qtd: "+qtd_individual+"</p>\
+                              </div>"
+                  }
+              }
+          }
+      }
+
+  </script>
+  </head>
+
+  
+  <body>
+    <div class="top">
+      <header>
+          <br>
+            <h1 id="tytolu">Tradicional Restaurante</h1>
+          <br><br>
+      </header>
+      <nav>
+        <ul>
+          <li><button><a href="/inicio">Contato</a></button></li>
+          <li><button><a href="/inicio">Quem Somos</a></button></li>
+          <li><button> <a href="/">Cardapio</a></button></li>
+          <li><button><a href="/inicio">Inicio</a></button></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="checkout">
+      <div class="summary">
+        <h1>Resumo do Pedido:</h1>
+
+        <h3>Meu pedido (<span id="qtdTotal">0</span>)</h3><br>
+
+        <div id="pedidos"></div><br><br>
+
+        <b>Total: R$<span id="Total">0,00</span></b>
+      </div>
+      
+      <div class="payment">
+        <h1>Pagamento</h1>
+
+        <form>
+          <input class="form-control" placeholder="Nome" type="text" required/>
+          <input class="form-control" placeholder="Endereço" type="text" required/>
+          <input class="form-control" placeholder="Email" type="text" required/>
+          <div class="payment">
+        </form>
+            <h1>Pagamento</h1>
+      
+            <form id="finalizar" action="/CompraFinalizada">
+              <input class="form-control" placeholder="Nome do cartão" type="text" required/>
+              <input class="form-control" placeholder="Número do cartão" type="text" required/>
+              <input class="form-control" placeholder="Validade" type="text" required/>
+              <input class="form-control" placeholder="CVV" type="text" required/>
+              <input class="payment-button" type="submit" value="Pagar" required/>
+           </form>
+          </div>
+        </div>
+        </body>
+      </html>
+

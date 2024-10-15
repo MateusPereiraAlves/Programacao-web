@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurante</title>
+  <style>
+    .top{
+        position: fixed;
+        width: 100%;
+      }
+
+      header {
+        display:block;
+        font-family: Helvetica, sans-serif;
+        top:0;
+        left:0;
+        height: 90px;
+        width:100%;
+        background:rgb(128, 73, 1); /*cor de fundo mais sóbria*/
+        text-align:center;
+        padding: 20px 1; /*espaçamento interno mais refinado*/
+        background-image: url("https://static.wixstatic.com/media/e361d3_4769bea14fc94f9c896bbfade3a460c8~mv2.jpg/v1/fill/w_1777,h_132,al_c,lg_1,q_80,enc_auto/e361d3_4769bea14fc94f9c896bbfade3a460c8~mv2.jpg");
+      }
+
+      nav ul {
+        list-style-type: none;
+        background-color: black;
+        overflow: hidden;
+        margin: 0%;
+        padding: 0%;
+        
+      }
+
+      nav a {
+        color: #f1f1f1;
+        text-decoration: none;
+        padding: 16px;
+        display: block;
+      }
+
+      nav li {
+        float: right;
+      }
+
+      nav a:hover {
+        background-color: #f1f1f1;
+        color: rgb(12, 12, 12);
+      }
+
+      h1{
+        color: rgb(255, 255, 255);
+        text-decoration: rgb(255, 255, 255);
+      }
+
+          body {
+            font-family: sans-serif;
+            margin: 0;
+            padding: 0;
+            background-image: url("https://img.freepik.com/vetores-premium/fundo-de-banner-abstrato-branco-e-cinza_28629-2091.jpg?w=2000");
+            height: 400px;
+            width: 100%;
+          }
+
+          button {
+            cursor: pointer;
+            font-family: sans-serif; /*fonte mais elegante*/
+            font-size: 14px; /*tamanho da fonte mais legível*/
+            padding: 10px; /*espaçamento interno mais refinado*/
+            background-color: #000000; /*cor de fundo mais sóbria*/
+            border: none; /*remoção da borda*/
+            color: white; /*cor da fonte mais elegante*/
+          }
+          
+          button:hover {
+            background-color: #999; /*cor de fundo ao passar o mouse mais sutil*/
+          }
+        * {
+          margin: 0;
+          font-family: sans-serif;
+        }
+          
+    .main-div {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 20px;
+      margin: 20px;
+    }
+
+    .section {
+      width: 100%;
+      background-color: #F5DEB3;
+      padding: 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .about-us {
+      font-size: 18px;
+      line-height: 1.5;
+      margin-bottom: 20px;
+    }
+    .menu-button {
+      background-color: #FFA07A;
+      color: white;
+      font-size: 18px;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+    .contact-form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .contact-form input, .contact-form textarea {
+      margin: 10px;
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+      border-radius: 10px;
+    }
+    .contact-form input[type="submit"] {
+      background-color: #FFA07A;
+      color: white;
+      font-size: 18px;
+      padding: 12px 20px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+  </style>
+  <script>
+// Primeiro, selecione o elemento <form>
+    var formElement = document.querySelector(".contact-form");
+
+    // Em seguida, adicione um event listener ao botão de submit do formulário
+    // que escute o evento "click"
+    var submitButton = formElement.querySelector("input[type=submit]");
+    submitButton.addEventListener("click", function() {
+      // Quando o botão for clicado, execute esta função
+    
+      // Crie um elemento <p>
+      var pElement = document.createElement("p");
+    
+      // Adicione a mensagem "Enviado!" ao elemento <p>
+      pElement.innerText = "Enviado!";
+    
+      // Altere a cor do texto para vermelho
+      pElement.style.color = "red";
+    
+      // Adicione o elemento <p> ao formulário
+      formElement.appendChild(pElement);
+    });
+    </script>
+</head>
+<body>
+    <div class="top">
+        <header>
+            <br>
+              <h1 id="tytolu">Tradicional Restaurante</h1>
+            <br><br>
+        </header>
+        <nav>
+          <ul>
+            <li><button><a href="/inicio">Contato</a></button></li>
+            <li><button><a href="/inicio">Quem Somos</a></button></li>
+            <li><button> <a href="/">Cardapio</a></button></li>
+            <li><button><a href="/inicio">Inicio</a></button></li>
+          </ul>
+        </nav>
+      </div>
+    <section class="section">
+      <h2>Quem Somos</h2>
+      <p class="about-us">
+        Somos um restaurante local que oferece comida deliciosa feita com ingredientes frescos e de alta qualidade. Nossa equipe é dedicada a fornecer aos nossos clientes uma experiência culinária única e memorável. Venha nos visitar e experimente a diferença!
+      </p>
+    </section>
+    <section class="section">
+      <a href="/"><button class="menu-button">Ver cardápio</button></a>
+    </section>
+    <section class="contact-section">
+      <h2>Fale Conosco</h2>
+      <form class="contact-form" method="POST">
+        <input type="text" name="nome" placeholder="Nome" required>
+        <input type="email" name="email" placeholder="Email" required>
+        <textarea name="mensagem" placeholder="Sua opinião sobre o restaurante" required></textarea>
+        <input type="submit" value="Enviar">
+    </form>
+    </section>
+    </div>
+    </body>
+    </html>

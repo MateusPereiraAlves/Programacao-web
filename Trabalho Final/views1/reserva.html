@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurante</title>
+
+
+    <style type="text/css">
+        #tabela_comprar{
+          background-color:#585303; 
+          color:#FFFFFF;
+          float: right;
+          border: 2px solid #999;
+          margin: 20px auto;
+          padding: 10px;  
+          overflow: hidden;        
+        }
+        #carr{position:absolute; left:600px; top:0px;}
+
+        header {
+            display:block;
+            position:fixed;
+            top:0;
+            left:0;
+            width:100%;
+            background:rgb(128, 73, 1); /*cor de fundo mais sóbria*/
+            text-align:center;
+            padding: 20px 1; /*espaçamento interno mais refinado*/
+          }
+          
+          button {
+            cursor: pointer;
+            font-family: sans-serif; /*fonte mais elegante*/
+            font-size: 14px; /*tamanho da fonte mais legível*/
+            padding: 10px; /*espaçamento interno mais refinado*/
+            background-color: #585303; /*cor de fundo mais sóbria*/
+            border: none; /*remoção da borda*/
+            color: white; /*cor da fonte mais elegante*/
+          }
+          
+          button:hover {
+            background-color: #999; /*cor de fundo ao passar o mouse mais sutil*/
+          }
+        * {
+          margin: 0;
+          font-family: sans-serif;
+        }
+
+        
+
+        .menuLateral {
+            background-color: rgb(15, 15, 15);
+            width: 250px;
+            left: 0%;
+            top:0%;
+            position: fixed;
+            display: none;
+        }
+        
+        .menuLateral .titulo {
+            color: white;
+            text-align: center;
+            font-weight: bold;
+            line-height: 45px;
+            font-size: 24px;
+            border-bottom: 2px solid red;
+        }
+        .exibir {
+          color: antiquewhite
+        }
+        .menuLateral .observacao {
+          color: darkorange;
+          border-bottom: 1px solid white;
+          border: none;
+          padding: 7px 15px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 16px;
+          margin: 300px 2px;
+          cursor: pointer;
+        }
+
+        .menuLateral .subtotal {
+          color: rgb(243, 239, 234);
+          border-bottom: 1px solid white;
+          border: none;
+          padding: 7px 15px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+
+
+
+        .menuLateral .comprar {
+          background-color: rgba(161, 123, 17, 0.836);
+          color: rgb(243, 239, 234);
+          border-bottom: 1px solid white;
+          border: none;
+          padding: 7px 15px;
+          text-align: center;
+          text-decoration: none;
+          font-size: 16px;
+          cursor: pointer;
+        }
+
+      .menuLateral .comprar:hover {
+          background-color: rgba(189, 186, 23, 0.925);
+      }
+
+
+
+    
+
+
+
+      .divprincipal {
+        position: absolute;
+        margin: 2px 1em 0 auto;
+        border: 2px solid black;
+        top: 140px;
+        left: 350px;
+        background-color: rgb(177, 12, 12);
+        color: white;
+      }
+
+      .divprincipal .btnAddCarrinho {
+        background-color: rgb(0, 0, 0);
+        color: white;
+        text-align: center;
+        cursor: pointer;
+        top: 60%;
+      }
+
+
+      .divprincipal .entrada ul{ margin: 0; }
+
+      .divprincipal .entrada li { display: inline-block; padding: 10px; }
+
+      .divprincipal .entrada a { text-decoration: none; color: #FFF; }
+
+      h2 {
+        text-align: center;
+        color: chartreuse;
+      }
+
+      .produto {
+        margin: 2px 1em 0;
+        border: 1px solid rgb(231, 221, 221);
+        flex: 1;
+        width: 200px;
+        padding: 20px;
+        display: flex;
+        flex-direction: column;
+        min-width: 0;
+        cursor: pointer;
+    }
+    
+    .produto:hover {
+      background-color: rgba(173, 161, 128, 0.349);
+    }
+
+    input {
+      cursor: pointer;
+    }
+    </style>
+    <script >
+      
+      
+      total = 0.00;
+      qtd_total = 0;
+      var id_produtos_comprados = []
+      var qtd_produtos_comprados = []
+      
+      function adiciona(id) {
+          calcula(id, "adicao");
+      }
+      function remove(id) {
+          calcula(id, "subtracao");
+      }
+      
+      function calcula(id, operacao) {
+          nomeid = "nome" + id;
+          precoid = "preco" + id;
+          qtd_atual_id = "qtd_atual" + id
+          divid = "div" + id
+          seilaid = "seila" + id
+      
+      
+          
+          nome = document.getElementById(nomeid).innerHTML;
+      
+          preco = document.getElementById(precoid).innerHTML;
+          preco = textoParaFloat(preco);
+          
+      
+      
+          qtd_atual = document.getElementById(qtd_atual_id).innerHTML;
+          qtd_atual = parseInt(qtd_atual);
+      
+         
+          
+          console.log(divid)
+          if (operacao == "adicao") {
+              qtd_total++
+              total += preco;
+              qtd_atual++
+              document.getElementsByClassName(nome)[0].innerHTML = qtd_atual;
+              document.getElementById(seilaid).innerHTML = qtd_atual
+      
+          } 
+          else {
+              qtd_atual--
+              qtd_total--
+              if (qtd_atual >= 1) {     
+                  document.getElementById(qtd_atual_id).innerHTML = qtd_atual
+                  document.getElementById(seilaid).innerHTML = qtd_atual
+              }
+              else {
+                      console.log(qtd_atual)
+                      s = document.getElementById(divid).innerHTML
+                      console.log(s)
+                      document.getElementById(divid).innerHTML = ""
+                      //document.getElementById("exibe").innerHTML = s.replace("<span id=\""+nome+"\">"+nome + "(<a class='"+nome+"' id='"+qtd_atual_id+"'>" + qtd + "</a>)<a onclick=\"remover('"+nome+"')\"></a></span", "")
+                  }
+              total -= preco;
+          }
+          document.getElementById("qtd_total").innerHTML = qtd_total
+          document.getElementById("total").innerHTML = floatParaTexto(total);
+          document.getElementById("qtd_total_imagem_carrinho").innerHTML = qtd_total
+      
+      }
+      
+      
+      // Converte   [valor texto com vírgula para  centavos]    para    [float]
+      function textoParaFloat(texto) {
+        texto = texto.slice(2)
+          // Retira pontos que separam milhar se existirem. Ex: 1.000,25 vira 1000,25
+          texto = texto.replace(".", "");
+      
+          // Substitui vírgula separando a casa decimal por ponto ex: 1000,25 vira 1000.25
+          texto = texto.replace(",", "."); // isso é necessário para converter para float corretamente
+      
+          // Converte de texto para número real
+          numero = parseFloat(texto);
+          
+          return numero; // Retorna um número float para ser usado para fazer cálculos    
+      }
+      
+      
+      
+      // Converte   [valor float com ponto para casa decimal]  para  [texto com vírgula para separar centavos]
+      function floatParaTexto(numero) {
+          numero = numero.toFixed(2); // Duas casas decimais
+      
+          texto = numero.toString();
+          texto = texto.replace(".", ","); // substitui a vírgula por ponto 
+      
+          return texto;
+      }
+      
+      
+      // Apenas prevenção para pessoas que digitam ponto de milhar por costume
+      function removePonto(x) {
+          x.value = x.value.replace('.', '');
+      }
+      
+      
+      function abre_menu() {
+          //Menu Lateral Escondido
+          let menu = document.querySelector('.menuLateral');
+          
+          if (menu.style.display !== 'block') {
+          menu.style.display = 'block';
+          }
+      };
+      function fecha_menu() {
+          //Menu Lateral Escondido
+          let menu = document.querySelector('.menuLateral');
+          
+          if (menu.style.display === 'block') {
+          menu.style.display = 'none';
+          }
+      };
+      
+      
+      function excluir(id) {
+          //Exclui um produto (div) do carrinho e altera os preços e qtds
+          qtd_atual_id = "qtd_atual" + id
+          divid = "div" + id
+          qtd_atual_id = "qtd_atual" + id
+          precoid = "preco" + id;
+      
+          preco = document.getElementById(precoid).innerHTML;
+          preco = textoParaFloat(preco);
+          qtd_atual = document.getElementById(qtd_atual_id).innerHTML
+          qtd_total -= qtd_atual
+          total -= qtd_atual * preco
+          document.getElementById("qtd_total").innerHTML = qtd_total
+          document.getElementById("total").innerHTML = floatParaTexto(total);
+          document.getElementById("qtd_total_imagem_carrinho").innerHTML = qtd_total
+          document.getElementById(divid).innerHTML = ""
+      } 
+
+      function Add_Carrinho(id) {
+          nomeid = "nome" + id;
+          precoid = "preco" + id;
+          qtdid = "qtd" + id;
+          qtd_atual_id = "qtd_atual" + id
+          divid = "div" + id
+          seilaid = "seila" + id
+      
+          nome = document.getElementById(nomeid).innerHTML;
+      
+          preco = document.getElementById(precoid).innerHTML;
+          preco = textoParaFloat(preco);
+          
+          qtd = document.getElementById(qtdid).innerHTML;
+          qtd = parseInt(qtd);
+      
+          var s = document.getElementById("exibe").innerHTML;
+          // verificando se ele nao existe na exibiçao
+          if (s.indexOf(nome) == -1) {
+              //mostra a mensagem
+              if (qtd > 0) {
+                  qtd_atual = 0
+                  qtd_atual += qtd
+                  document.getElementById("exibe").innerHTML += "<div id ='"+divid+"' class='p'></div>"
+                  document.getElementById(divid).innerHTML += "<span id=\""+nome+"\">"+nome + "(<a class='"+nome+"' id='"+qtd_atual_id+"'>" + qtd + "</a>)<a onclick=\"remover('"+nome+"')\"></a></span>" +
+                  "<input type='button' value='-' onclick=remove('"+id+"')>" + 
+                  "<span id='"+seilaid+"'>"+qtd_atual+"</span>" +
+                  "<input type='button' value='+' onclick=adiciona("+id+")><br>\
+                  <button onclick='excluir("+id+")'>retirar</button><br><br>";
+              }
+          } 
+          else {
+              qtd_atual = document.getElementById(qtd_atual_id).innerHTML;
+              qtd_atual = parseInt(qtd_atual)
+              qtd_nova = qtd + qtd_atual
+              document.getElementById(qtd_atual_id).innerHTML = qtd_nova
+              document.getElementById(seilaid).innerHTML = qtd_nova
+          }
+          if (qtd > 0) {
+              qtd_total += qtd
+              total += qtd * preco
+              document.getElementById("qtd_total").innerHTML = qtd_total
+              document.getElementById("qtd_total_imagem_carrinho").innerHTML = qtd_total
+              document.getElementById("total").innerHTML = floatParaTexto(total);
+          }
+          document.getElementById(qtdid).innerHTML = 0
+      
+          FechaOpcaoCompra()
+      
+      }
+      
+      function add_qtd(id) {
+          //Aumenta a qtd a ser colocada no carrinho
+          qtdid = "qtd" + id;
+          qtd = document.getElementById(qtdid).innerHTML;
+          qtd = parseInt(qtd);
+          qtd++
+          document.getElementById(qtdid).innerHTML = qtd;
+      }
+      
+      function remove_qtd(id) {
+          //Diminui a qtd a ser colocada no carrinho
+          qtdid = "qtd" + id;
+          qtd = document.getElementById(qtdid).innerHTML;
+          qtd = parseInt(qtd);
+          if (qtd > 0) {
+              qtd--
+              document.getElementById(qtdid).innerHTML = qtd;
+          }
+      }
+
+      //Tabela de Produtos pega do Banco
+      var obj = '<%- escape(JSON.stringify(produtos)) %>'
+      obj = unescape(obj)
+      obj = JSON.parse(obj)
+      console.log(obj);
+      console.log(JSON.parse(obj))
+
+      function add_all_products(tbl, tipoProd) {
+          var tag = ''
+          count = 0
+          tblTipo = []
+          var tamanho_impar = false;
+          for (let produto of tbl) {
+              if (produto.tipo == tipoProd) {
+                  tblTipo.push(produto)
+                }
+            }
+            console.log(tblTipo)
+        if (tblTipo.length % 2 != 0) {
+            tamanho_impar = true
+        }
+          for (let produto of tbl) {
+              var id = produto.id
+              var nome = produto.nome
+              var preco = floatParaTexto(produto.preco)
+              var descricao = produto.descricao
+              var tipo = produto.tipo
+              //pegar do banco o tipo do produto
+              if (tipo == tipoProd) {
+                  if (count % 2 == 0) {
+                      tag += 
+                          "<tr>\
+                              <td>\
+                              <div class='produto' id='"+id+"' onclick='criarOpcaoDeCompra("+id+")'>\
+                                  <div id='nome"+id+"' class='nomeprod'>"+nome+"</div>\
+                                  <p>"+descricao+"</p>\
+                                  <div id='preco"+id+"' class='preco'>R$"+preco+"</</div>\
+                              </div>\
+                            </td>"
+                      if (tamanho_impar == true && id == tblTipo[tblTipo.length - 1].id) {
+                          tag += "</tr><br>"
+                          document.getElementById(tipo).innerHTML += tag
+                      }
+                  }
+                  else {
+                      tag += 
+                          "<td>\
+                              <div class='produto' id='"+id+"' onclick='criarOpcaoDeCompra("+id+")'>\
+                                  <div id='nome"+id+"' class='nomeprod'>"+nome+"</div>\
+                                  <p>"+descricao+"</p>\
+                                  <div id='preco"+id+"' class='preco'>R$"+preco+"</</div>\
+                              </div>\
+                              </td>\
+                          </tr><br>"
+                      document.getElementById(tipo).innerHTML += tag
+                      console.log(tag)
+                      tag = ''
+                  } 
+                count++
+            }
+          }
+      }
+       
+      
+      function criarOpcaoDeCompra(id) {
+          for (let produto of obj) {
+              if (id == produto.id) {
+                  var id = produto.id
+                  var nome = produto.nome
+                  var preco = floatParaTexto(produto.preco)
+                  var descricao = produto.descricao
+              }
+          }
+          document.getElementById("tabela_comprar").innerHTML = 
+                  "<div id = 'tabela_comprar'>\
+                      <button onclick='FechaOpcaoCompra()'> X </button>\
+                      <div id='nome"+id+"' class='nomeprod'>"+nome+"</div>\
+                      <p>"+descricao+"</p>\
+                      <div id='preco"+id+"' class='preco'>R$"+preco+"</div>\
+                      <button class='btnAddCarrinho' onclick='Add_Carrinho("+id+")'>Adicionar no Carrinho</button>\
+                      <input type='button' value='-' onclick='remove_qtd("+id+")'>\
+                      <span id='qtd"+id+"'>0</span>" +
+                      "<input type='button' value='+' onclick='add_qtd("+id+")'>\
+                  </div>"
+      }
+      
+      
+      function FechaOpcaoCompra() {
+          document.getElementById('tabela_comprar').innerHTML = ''
+      }
+      
+      
+      
+      function PegarInfo(){
+          //Pega o id e a qtd dos produtos comprados
+          var produtos = document.querySelector('.exibir')
+          for (var prod of produtos.children) {
+              var id = prod.id.slice(3)
+              var qtd_atual_id = "qtd_atual" + id
+              var qtd = document.getElementById(qtd_atual_id).innerHTML
+              qtd = parseInt(qtd)
+              id_produtos_comprados.push(id)
+              qtd_produtos_comprados.push(qtd)
+          }
+          alert(`idProduto: ${id_produtos_comprados}`)
+          const inputid = document.querySelector('#id');
+          const inputqtd = document.querySelector('#qtd');
+          for(let i = 0; i < id_produtos_comprados.length; i++) {
+              inputid.value += `${id_produtos_comprados[i]},`
+              inputqtd.value += `${qtd_produtos_comprados[i]},`
+          }
+          localStorage.setItem('qtd_total', qtd_total);
+          localStorage.setItem('valor_total', total);
+          localStorage.setItem('idProdComprados', id_produtos_comprados);
+          localStorage.setItem('qtdProdComprados', qtd_produtos_comprados);
+      }      
+
+
+
+      function add_all_products_for_tipe() {
+        add_all_products(obj, 'entrada'); 
+        add_all_products(obj, 'sobremesa'); 
+        add_all_products(obj, 'salada'); 
+        add_all_products(obj, 'bebida') ; 
+        add_all_products(obj, 'prato principal')
+      }
+
+      function showMesage() {
+          nome = document.getElementById('nome').innerHTML
+          if (nome == 'Logar') {
+            document.getElementById('loc').innerHTML = ''
+          }
+      }
+      
+      </script>
+</head>
+<body onload="add_all_products_for_tipe(); showMesage();">
+    <div class="divprincipal">
+        <div id="loc">Você está alocado na mesa <span> <%= mesa %> </span> e será atendido(a) pelo funcionário(a) <span> <%= funcionario %> </span></div>
+        <h2 class="titulo">Delivery</h2>
+        <p>Faça as pessoas ficarem com água na boca. Dê uma breve descrição ao seu menu.</p>
+        <br><br><br>
+        <div class="entrada">
+          <h3>Entrada</h3>
+          <p>Essa é uma seção do seu menu.</p>
+          <br>
+          <!--Tabela dos produtos-->
+          <table id="entrada">
+          </table>
+        <div>
+        <div class="salada">
+            <h3>Salada</h3>
+            <p>Essa é uma seção do seu menu.</p>
+               <br>
+            <!--Tabela dos produtos-->
+            <table id="salada">
+            </table>
+        <div>
+          <div class="prato principal">
+              <h3>Prato Principal</h3>
+              <p>Essa é uma seção do seu menu.</p>
+                 <br>
+              <!--Tabela dos produtos-->
+              <table id="prato principal">
+              </table>
+        <div>
+        <div class="bebida">
+            <h3>Bebida</h3>
+            <p>Essa é uma seção do seu menu.</p>
+            <br>
+            <!--Tabela dos produtos-->
+            <table id="bebida">
+            </table>
+          <div>
+        <div class="sobremesa">
+            <h3>Sobremesa</h3>
+            <p>Essa é uma seção do seu menu.</p>
+            <br>
+            <!--Tabela dos produtos-->
+            <table id="sobremesa">
+            </table>
+        <div>
+          <div id="tabela_comprar">
+            <!----- Tabela de adicionar no carrinho. Mudar isso - Fazer uma função que pega os dados do banco ----->
+          </div>
+    </div>
+    
+    <header>
+        <h1>Tradicional Restaurante</h1>
+        <br><br>
+        <button>Inicio</button>
+        <button>Cardapios</button>
+        <button>Quem Somos</button>
+        <button>Contato</button>
+        <button id="abreCarrinho" onclick="abre_menu()">Abrir Carrinho (<span id="qtd_total_imagem_carrinho">0</span>)</button>
+        <form action="\" method="post">
+            <a href="\login"><div id="nome"><%= nome %></div></a> 
+        </form>
+        <a href="\destroy">Deslogar</a> 
+      </header>
+      <div class="menuLateral">
+          <div class="titulo">
+              <button id="fechaCarrinho" onclick="fecha_menu()">X</button>
+              Meu pedido (<span id="qtd_total">0</span>)</div>
+        <div class="exibir" id="exibe"></div>
+        <div class="observacao"><div id="texto" onclick="caixaTexto()">Adicionar observações do pedido</div><br>
+        <div class="subtotal"><b>Total: R$<span id="total">0,00<span></b></div>
+            <form action="\TelaCompra" method="GET">
+                <input class="comprar" type="submit" value="Comprar" onclick="PegarInfo()">
+                <input id='id' type="hidden" name="id" value=""><br>
+                <input id='qtd' type="hidden" name="qtd" value=""><br>
+            </form>
+        </div>
+    </div>
+    
+</body>
+</html>
